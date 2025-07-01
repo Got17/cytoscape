@@ -57,18 +57,13 @@ jobs:
         run: dotnet build --configuration Release
         working-directory: ./WebSharper.Cytoscape.Sample
 
-      - name: Run Vite build
-        run: npx vite build
-        working-directory: ./WebSharper.Cytoscape.Sample
-
-      # - name: Copy missing static assets
-      #   run: |
-      #     mkdir -p WebSharper.Cytoscape.Sample/wwwroot/dist/Scripts
-      #     cp WebSharper.Cytoscape.Sample/wwwroot/Scripts/*.css WebSharper.Cytoscape.Sample/wwwroot/dist/Scripts/
-      #     cp WebSharper.Cytoscape.Sample/wwwroot/Scripts/*.head.js WebSharper.Cytoscape.Sample/wwwroot/dist/Scripts/
+      - name: Prepare Deployment
+        run: |
+          mkdir -p dist
+          cp -r WebSharper.TouchEvents.Sample/wwwroot/* dist/
 
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: WebSharper.Cytoscape.Sample/wwwroot/dist
+          publish_dir: dist
