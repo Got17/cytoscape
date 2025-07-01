@@ -41,15 +41,6 @@ jobs:
       - name: Restore Dependencies Using Paket
         run: dotnet tool run paket restore
 
-      - name: Add GitHub registry NuGet source
-        run: 
-          dotnet nuget 
-            add source https://nuget.pkg.github.com/dotnet-websharper/index.json 
-            --name github 
-            --username intellifactory-gh 
-            --password ${{ secrets.PAT_PACKAGE }} 
-            --store-password-in-clear-text
-
       - name: Build WebSharper.Cytoscape
         run: dotnet build WebSharper.Cytoscape/WebSharper.Cytoscape.fsproj
 
@@ -65,5 +56,5 @@ jobs:
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: dist
